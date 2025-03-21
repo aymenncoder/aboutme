@@ -1,0 +1,27 @@
+from PIL import Image, ImageDraw, ImageFont
+
+# إنشاء صورة جديدة بحجم 200x100 وخلفية بيضاء
+image = Image.new('RGB', (300, 150), color='white')
+
+# إعداد أداة الرسم
+draw = ImageDraw.Draw(image)
+
+# تحميل خط (تأكد من توفر ملف الخط في نفس المسار أو استخدم خط افتراضي)
+try:
+    font = ImageFont.truetype("arial.ttf", 40)  # يمكنك تغيير نوع الخط وحجمه
+except IOError:
+    font = ImageFont.load_default()
+
+# الاسم الذي تريد كتابته
+name = "أيمن أحمد"
+
+# الحصول على حجم النص لتوسيطه
+text_width, text_height = draw.textsize(name, font=font)
+position = ((image.width - text_width) // 2, (image.height - text_height) // 2)
+
+# كتابة النص على الصورة باللون الأسود
+draw.text(position, name, font=font, fill='black')
+
+# حفظ الصورة أو عرضها
+image.save("output_image.png")
+image.show()
